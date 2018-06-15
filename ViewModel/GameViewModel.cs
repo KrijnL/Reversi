@@ -64,6 +64,15 @@ namespace ViewModel
             this.Game = Game.PutStone(position);
             this.Board = Game.Board;
             this.CurrentPlayer = Game.CurrentPlayer;
+            if (Game.IsGameOver)
+            {
+                PlayerViewModel winner = PlayerW;
+                if (PlayerB.Score.Value > PlayerW.Score.Value)
+                {
+                    winner = PlayerB;
+                }
+                SwitchTo(new GameOverViewModel(this.viewModel, Options, winner));
+            }
         }
 
         public bool IsValidMove(Vector2D position)

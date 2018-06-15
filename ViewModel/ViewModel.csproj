@@ -62,6 +62,7 @@
     <Compile Include="BoardRowViewModel.cs" />
     <Compile Include="BoardSquareViewModel.cs" />
     <Compile Include="BoardViewModel.cs" />
+    <Compile Include="GameOverViewModel.cs" />
     <Compile Include="PlayerOptionsViewModel.cs" />
     <Compile Include="EasyCommand.cs" />
     <Compile Include="GameViewModel.cs" />

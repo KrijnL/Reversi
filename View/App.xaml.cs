@@ -13,5 +13,9 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
+
+        private void MainViewModel_ApplicationExit() {
+            Application.Current.Shutdown();
+        }
     }
 }

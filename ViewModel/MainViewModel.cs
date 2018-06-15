@@ -15,6 +15,8 @@ namespace ViewModel
 
         private Screen currentScreen;
 
+        public event Action ApplicationExit;
+
         public Screen CurrentScreen
         {
             get
@@ -31,6 +33,11 @@ namespace ViewModel
         public MainViewModel()
         {
             this.CurrentScreen = new WelcomeViewModel(this);
+        }
+
+        public void Exit()
+        {
+            ApplicationExit?.Invoke();
         }
 
         
