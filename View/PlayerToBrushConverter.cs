@@ -13,7 +13,7 @@ using ViewModel;
 
 namespace View
 {
-    public class PlayerToStringConverter : IMultiValueConverter
+    public class PlayerToBrushConverter : IMultiValueConverter
 
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -25,14 +25,15 @@ namespace View
 
                 if (player == Player.BLACK)
                 {
-                    return options.PlayerBName.Value;
+                    return new SolidColorBrush(options.PlayerBColor.Value);
                 }
                 else if (player == Player.WHITE)
                 {
-                    return options.PlayerWName.Value;
+                    return new SolidColorBrush(options.PlayerWColor.Value);
                 }
             }
-            return "GAME OVER";
+            return System.Drawing.Brushes.Transparent;
+
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

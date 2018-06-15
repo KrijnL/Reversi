@@ -16,6 +16,8 @@ namespace ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public PlayerOptionsViewModel Options { get; set; }
+
         public List<BoardRowViewModel> Rows
         {
             get
@@ -23,7 +25,7 @@ namespace ViewModel
                 List<BoardRowViewModel> rows = new List<BoardRowViewModel>();
                 for(int i = 0; i<Game.Board.Height; i++)
                 {
-                    rows.Add(new BoardRowViewModel(Game, i ));
+                    rows.Add(new BoardRowViewModel(Game, i , Options));
                 }
                 return rows;
             }
@@ -39,9 +41,10 @@ namespace ViewModel
             }
         }
 
-        public BoardViewModel(GameViewModel game)
+        public BoardViewModel(GameViewModel game, PlayerOptionsViewModel options)
         {
            this.Game = game;
+            this.Options = options;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

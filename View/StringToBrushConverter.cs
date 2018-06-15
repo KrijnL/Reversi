@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Reversi;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,11 +10,22 @@ using System.Windows.Media;
 
 namespace View
 {
-    class StringToBrushConverter : IValueConverter
+    public class StringToBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string player = value as string;
+            string player = "";
+            if (value is Player)
+            {
+                if ((Player)value == Player.WHITE)
+                    player = "W";
+                if ((Player)value == Player.BLACK)
+                    player = "B";
+            }
+            else
+            {
+                player = value as string;
+            }
             if (player.Equals("B"))
             {
                 return Brushes.Black;

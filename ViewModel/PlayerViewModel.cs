@@ -11,15 +11,24 @@ namespace ViewModel
     public class PlayerViewModel
     {
         private GameViewModel Game;
-        public Cell<string> Name { get; set; }
+        private PlayerOptionsViewModel options;
+        public string Name
+        {
+            get
+            {
+                return options.GetName(Player);
+            }
+        }
         public Player Player { get; private set; }
         public Cell<int> Score { get; set; }
+        public PlayerOptionsViewModel Options { get; private set; }
+        //public string Color { get; set; }
 
-        public PlayerViewModel(GameViewModel Game, Player player, string name)
+        public PlayerViewModel(GameViewModel Game, Player player, PlayerOptionsViewModel options)
         {
             this.Game = Game;
-            this.Player = Player;
-            this.Name = Cell.Cell.Create("name");
+            this.Player = player;
+            this.options = options;
             this.Score = Cell.Cell.Create(Game.Board.CountStones(Player));
             Game.PropertyChanged += (s, e) =>
             {

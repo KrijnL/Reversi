@@ -5,32 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <local:StringToBrushConverter x:Key="stringToBrush"/>
         <local:ValidToBrushConverter x:Key="validToBrush"/>
-        <local:PLayerToStringConverter x:Key="playerToBrush"/>
+        <local:PlayerToBrushConverter x:Key="playerToBrush"/>
+        <local:PlayerToStringConverter x:Key="playerToString"/>
+        <local:OwnerToBrushConverter x:Key="OwnerToBrush"/>
     </Window.Resources>
     <ContentPresenter Content="{Binding CurrentScreen}">
         <ContentPresenter.Resources>
+            
+            
+            
             <DataTemplate DataType="{x:Type viewModel:WelcomeViewModel}" >
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0">Welcome to my Reveersi Game implementation. Please choose the size of your board.</TextBlock>
-                    <local:GridSizeInput Grid.Row="1"></local:GridSizeInput>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2">Welcome to my Reveersi Game implementation. Please choose the size of your board.</TextBlock>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+                        <TextBlock>Please enter player names:</TextBlock>
+                        <local:InputField Margin="5" Label="Player one:" Value="{Binding Options.PlayerBName.Value, Mode=TwoWay}"/>
+                        <local:InputField Margin="5" Label="Player two:" Value="{Binding Options.PlayerWName.Value, Mode=TwoWay}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                        <TextBlock>Please choose a color:</TextBlock>
+                        <xctk:ColorPicker Name="ClrPcker_PlayerB" DisplayColorAndName="True" Margin="5" SelectedColor="{Binding Options.PlayerBColor.Value}"></xctk:ColorPicker>
+                        <xctk:ColorPicker Name="ClrPcker_PlayerW" DisplayColorAndName="True" Margin="5" SelectedColor="{Binding Options.PlayerWColor.Value}"></xctk:ColorPicker>
+
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical">
+                        <TextBlock>Please enter the desired grid dimensions:</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <local:InputField Margin="5" Label="Width:" Value="{Binding Width, Mode=TwoWay}"/>
+                            <local:InputField Margin="5" Label="Height:" Value="{Binding Height, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Width="250" HorizontalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding StartGame}" Margin="5">Submit</Button>
                 </Grid>
             </DataTemplate>
+            
+            
+            
+            
             <DataTemplate DataType="{x:Type viewModel:GameViewModel}" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ItemsControl Grid.Column="0" ItemsSource="{Binding BoardVM.Rows}">
+                    <ItemsControl  ItemsSource="{Binding BoardVM.Rows}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical"/>
@@ -47,7 +82,14 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Button Width="40" Height="40" Background="{Binding Valid.Value, Converter={StaticResource validToBrush}}" Command="{Binding PutStone}">
-                                                <Ellipse Width="30" Height="30" Fill="{Binding Owner.Value, Converter={StaticResource stringToBrush}}"></Ellipse>
+                                                <Ellipse Width="30" Height="30">
+                                                    <Ellipse.Fill>
+                                                        <MultiBinding Converter="{StaticResource playerToBrush}">
+                                                            <Binding Path="Owner.Value"/>
+                                                            <Binding Path="Options"/>
+                                                        </MultiBinding>
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
                                             </Button>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -55,6 +97,13 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -64,14 +113,33 @@
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                           
+
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Margin="5">Current Player:</Label>
-                            <TextBlock Grid.Column="1" Text="{Binding CurrentPlayer}"></TextBlock>
-                            <!--<Rectangle Height="25" Width="25" Grid.Column="1" Margin="0" Stroke="Black" Fill="{Binding CurrentPlayer.Value, Converter={StaticResource playerToBrush}}"></Rectangle>-->
-                            <Button Grid.Column="1" Width="25" Height="25" Background="{Binding CurrentPlayer, Converter={StaticResource playerToBrush}}" ></Button>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.ColumnSpan="2" Grid.Row="0" Margin="5" FontSize="14">Current Player:</Label>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5" FontSize="14">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource playerToString}">
+                                            <Binding Path="CurrentPlayer"/>
+                                            <Binding Path="Options"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            
+                            <Ellipse Grid.Column="1" Grid.Row="1" Width="25" Height="25" Stroke="Black">
+                                <Ellipse.Fill>
+                                    <MultiBinding Converter="{StaticResource playerToBrush}">
+                                        <Binding Path="CurrentPlayer"/>
+                                        <Binding Path="Options"/>
+                                    </MultiBinding>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </Grid>
+
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -82,10 +150,10 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0" FontSize="18" >Player:</Label>
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding PlayerB.Name}"></TextBlock>
+                            <TextBlock Margin="5" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding PlayerB.Name}" FontSize="18" VerticalAlignment="Center"></TextBlock>
                             <Label Grid.ColumnSpan="2" Grid.Row="1"  FontSize="14">Amount of stones:</Label>
-                            <TextBlock Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding PlayerB.Score}"></TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding PlayerB.Score.Value}" HorizontalAlignment="Center" FontSize="20"></TextBlock>
+                            <local:ScoreBar Grid.Column="1" Grid.Row="2" BoardHeight="{Binding Board.Height}" BoardWidth="{Binding Board.Width}" Score="{Binding PlayerB.Score.Value}"/>
                         </Grid>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
@@ -97,14 +165,19 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0" FontSize="18" >Player:</Label>
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding PlayerW.Name}"></TextBlock>
+                            <TextBlock Margin="5" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding PlayerW.Name}" FontSize="18" VerticalAlignment="Center"></TextBlock>
                             <Label Grid.ColumnSpan="2" Grid.Row="1"  FontSize="14">Amount of stones:</Label>
-                            <TextBlock Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding PlayerW.Score}"></TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding PlayerW.Score.Value}" HorizontalAlignment="Center" FontSize="20"></TextBlock>
+                            <local:ScoreBar Grid.Column="1" Grid.Row="2" BoardHeight="{Binding Board.Height}" BoardWidth="{Binding Board.Width}" Score="{Binding PlayerW.Score.Value}"/>
                         </Grid>
                     </Grid>
                 </Grid>
             </DataTemplate>
+            
+            
+            
+            
+            
         </ContentPresenter.Resources>
     </ContentPresenter>
 </Window>

@@ -42,14 +42,20 @@ namespace ViewModel
 
         public PlayerViewModel PlayerW { get; set; }
         public PlayerViewModel PlayerB { get; set; }
+
+        public PlayerOptionsViewModel Options { get; set; }
         
 
-        public GameViewModel(MainViewModel viewModel, int width, int height) : base(viewModel)
+        public GameViewModel(MainViewModel viewModel, int width, int height, PlayerOptionsViewModel options) : base(viewModel)
         {
             this.Game = new ReversiGame(width,height);
-            this.BoardVM = new BoardViewModel(this);
+            this.BoardVM = new BoardViewModel(this, options);
             this.Board = Game.Board;
             this.CurrentPlayer = Game.CurrentPlayer;
+            this.Options = options;
+
+            this.PlayerB = new PlayerViewModel(this, Player.BLACK, options);
+            this.PlayerW = new PlayerViewModel(this, Player.WHITE, options);
             
         }
 

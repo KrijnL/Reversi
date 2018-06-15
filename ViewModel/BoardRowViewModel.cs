@@ -15,6 +15,8 @@ namespace ViewModel
 
         public GameViewModel Game { get; set; }
 
+        public PlayerOptionsViewModel Options { get; set; }
+
         public List<BoardSquareViewModel> Squares
         {
             get
@@ -30,7 +32,7 @@ namespace ViewModel
                         ownerString = owner.ToString();
                     }
 
-                    squares.Add(new BoardSquareViewModel(Game, position));
+                    squares.Add(new BoardSquareViewModel(Game, position, Options));
                 }
                 return squares;
             }
@@ -38,10 +40,11 @@ namespace ViewModel
 
         
 
-        public BoardRowViewModel(GameViewModel game, int rowNumber)
+        public BoardRowViewModel(GameViewModel game, int rowNumber, PlayerOptionsViewModel options)
         {
             this.Game = game;
             this.rowNumber = rowNumber;
+            this.Options = options;
         }
     }
 }

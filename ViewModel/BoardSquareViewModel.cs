@@ -20,23 +20,25 @@ namespace ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Cell<string> Owner {get;set;}
+        public Cell<Player> Owner {get;set;}
 
         public GameViewModel Game { get; set; }
         public Vector2D Position { get; set; }
         public ICommand PutStone { get; set; }
         public Cell<bool> Valid { get; set; }
+        public PlayerOptionsViewModel Options { get; set; }
 
 
-        public BoardSquareViewModel(GameViewModel game, Vector2D position)
+        public BoardSquareViewModel(GameViewModel game, Vector2D position, PlayerOptionsViewModel options)
         {
             this.Game = game;
             this.Position = position;
             this.PutStone = new PutStoneCommand(Game, Position);
+            this.Options = options;
             if (Game.Board[Position] != null)
-                this.Owner = Cell.Cell.Create(Game.Board[Position].ToString());
+                this.Owner = Cell.Cell.Create(Game.Board[Position]);
             else
-                this.Owner = Cell.Cell.Create("");
+                this.Owner = Cell.Cell.Create((Player)null);
             this.Valid = Cell.Cell.Create(Game.IsValidMove(Position));
             Game.PropertyChanged += (s, e) =>
             {
@@ -54,7 +56,7 @@ namespace ViewModel
 
         private void Refresh()
         {
-            this.Owner.Value = Game.Board[Position] != null ? Game.Board[Position].ToString() : "";
+            this.Owner.Value = Game.Board[Position] != null ? Game.Board[Position] : null;
             this.Valid.Value = Game.IsValidMove(Position);
         }
 
