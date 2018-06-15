@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ViewModel;
+
 
 namespace View
 {
@@ -27,8 +27,7 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
-            MainViewModel model =  new MainViewModel();
-            this.DataContext = model;
+           
         }
 
 

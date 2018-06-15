@@ -22,7 +22,7 @@ namespace ViewModel
         public GameOverViewModel(MainViewModel model, PlayerOptionsViewModel options, PlayerViewModel winner) : base(model)
         {
             this.Options = options;
-
+            this.Winner = winner;
             Exit = new ExitCommand(this.viewModel);
 
             Restart = new EasyCommand(() =>

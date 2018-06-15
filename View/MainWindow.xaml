@@ -185,7 +185,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center">
                         <TextBlock Margin="5" FontSize="25">Game Over!</TextBlock>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock>The winner is:</TextBlock>
@@ -197,7 +197,7 @@
                         </StackPanel>
                     </StackPanel>
                     <Button Grid.Row="1" Grid.Column="0" Margin="5" Command="{Binding Exit}">Exit</Button>
-                    <Button Grid.Row="1" Grid.Column="0" Margin="5" Command="{Binding Restart}">Restart</Button>
+                    <Button Grid.Row="1" Grid.Column="1" Margin="5" Command="{Binding Restart}">Restart</Button>
                 </Grid>
             </DataTemplate>
             

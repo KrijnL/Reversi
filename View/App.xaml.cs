@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ViewModel;
 
 namespace View
 {
@@ -13,6 +14,19 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            var main = new MainWindow();
+            MainViewModel mainVM = new MainViewModel();
+            main.DataContext = mainVM;
+            main.Show();
+            mainVM.ApplicationExit += () =>
+            {
+                MainViewModel_ApplicationExit();
+            };
+        }
 
         private void MainViewModel_ApplicationExit() {
             Application.Current.Shutdown();

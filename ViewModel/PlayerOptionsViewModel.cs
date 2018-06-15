@@ -22,7 +22,7 @@ namespace ViewModel
             PlayerBColor = Cell.Cell.Create((Color)ColorConverter.ConvertFromString("Black"));
             PlayerWColor = Cell.Cell.Create((Color)ColorConverter.ConvertFromString("White"));
 
-            PlayerBName = Cell.Cell.Create("Bapediboop");
+            PlayerBName = Cell.Cell.Create("Black");
             PlayerWName = Cell.Cell.Create("White");
         }
 

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -32,7 +31,7 @@ namespace View
                     return new SolidColorBrush(options.PlayerWColor.Value);
                 }
             }
-            return System.Drawing.Brushes.Transparent;
+            return Brushes.Transparent;
 
         }
 
