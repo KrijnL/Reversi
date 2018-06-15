@@ -36,7 +36,7 @@ namespace ViewModel
             this.CurrentScreen = new WelcomeViewModel(this);
         }
 
-        public void Exit()
+        internal void Exit()
         {
             ApplicationExit?.Invoke();
             Debug.WriteLine("Ïnvoked");
