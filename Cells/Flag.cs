@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Cells
+namespace Cell
 {
     public class Flag
     {

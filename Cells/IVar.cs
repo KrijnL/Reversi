@@ -1,5 +1,5 @@
 ﻿
-namespace Cells
+namespace Cell
 {
     public interface IVar<T>
     {

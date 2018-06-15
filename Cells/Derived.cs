@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cells
+namespace Cell
 {
     internal class Derived<T> : ConcreteCell<T>
     {

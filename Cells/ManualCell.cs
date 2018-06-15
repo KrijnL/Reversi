@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cells
+namespace Cell
 {
     internal abstract class ManualCell<T> : Cell<T>
     {

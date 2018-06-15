@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Cells
+namespace Cell
 {
     [DebuggerDisplay( "{Value}" )]
     public class Var<T> : IVar<T>

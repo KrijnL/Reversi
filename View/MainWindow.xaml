@@ -4,9 +4,107 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <Window.Resources>
+        <local:StringToBrushConverter x:Key="stringToBrush"/>
+        <local:ValidToBrushConverter x:Key="validToBrush"/>
+        <local:PLayerToStringConverter x:Key="playerToBrush"/>
+    </Window.Resources>
+    <ContentPresenter Content="{Binding CurrentScreen}">
+        <ContentPresenter.Resources>
+            <DataTemplate DataType="{x:Type viewModel:WelcomeViewModel}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0">Welcome to my Reveersi Game implementation. Please choose the size of your board.</TextBlock>
+                    <local:GridSizeInput Grid.Row="1"></local:GridSizeInput>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:GameViewModel}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ItemsControl Grid.Column="0" ItemsSource="{Binding BoardVM.Rows}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding Squares}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Width="40" Height="40" Background="{Binding Valid.Value, Converter={StaticResource validToBrush}}" Command="{Binding PutStone}">
+                                                <Ellipse Width="30" Height="30" Fill="{Binding Owner.Value, Converter={StaticResource stringToBrush}}"></Ellipse>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                           
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Margin="5">Current Player:</Label>
+                            <TextBlock Grid.Column="1" Text="{Binding CurrentPlayer}"></TextBlock>
+                            <!--<Rectangle Height="25" Width="25" Grid.Column="1" Margin="0" Stroke="Black" Fill="{Binding CurrentPlayer.Value, Converter={StaticResource playerToBrush}}"></Rectangle>-->
+                            <Button Grid.Column="1" Width="25" Height="25" Background="{Binding CurrentPlayer, Converter={StaticResource playerToBrush}}" ></Button>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" FontSize="18" >Player:</Label>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding PlayerB.Name}"></TextBlock>
+                            <Label Grid.ColumnSpan="2" Grid.Row="1"  FontSize="14">Amount of stones:</Label>
+                            <TextBlock Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding PlayerB.Score}"></TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" FontSize="18" >Player:</Label>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding PlayerW.Name}"></TextBlock>
+                            <Label Grid.ColumnSpan="2" Grid.Row="1"  FontSize="14">Amount of stones:</Label>
+                            <TextBlock Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding PlayerW.Score}"></TextBlock>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </ContentPresenter.Resources>
+    </ContentPresenter>
 </Window>

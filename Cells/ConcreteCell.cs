@@ -1,5 +1,5 @@
 ﻿
-namespace Cells
+namespace Cell
 {    
     internal class ConcreteCell<T> : Cell<T>
     {

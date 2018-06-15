@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cells
+namespace Cell
 {
     internal class ReadonlyWrapper<T> : Cell<T>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Cells
+namespace Cell
 {    
     public abstract class Cell<T> : Var<T>, INotifyPropertyChanged
     {
