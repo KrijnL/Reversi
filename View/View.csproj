@@ -98,6 +98,7 @@
     <Compile Include="InputField.xaml.cs">
       <DependentUpon>InputField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MouseEnterBehavior.cs" />
     <Compile Include="OwnerToBrushConverter.cs" />
     <Compile Include="PlayerToBrushConverter.cs" />
     <Compile Include="PlayerToStringConverter.cs" />
@@ -172,6 +173,9 @@
       <Project>{4fe81928-1dd5-4ca5-b18a-048e0d78b426}</Project>
       <Name>ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="eflatdemo2.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

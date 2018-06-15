@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ViewModel
 {
@@ -44,7 +45,7 @@ namespace ViewModel
         public PlayerViewModel PlayerB { get; set; }
 
         public PlayerOptionsViewModel Options { get; set; }
-        
+
 
         public GameViewModel(MainViewModel viewModel, int width, int height, PlayerOptionsViewModel options) : base(viewModel)
         {
@@ -53,6 +54,7 @@ namespace ViewModel
             this.Board = Game.Board;
             this.CurrentPlayer = Game.CurrentPlayer;
             this.Options = options;
+            
 
             this.PlayerB = new PlayerViewModel(this, Player.BLACK, options);
             this.PlayerW = new PlayerViewModel(this, Player.WHITE, options);
@@ -89,6 +91,8 @@ namespace ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        
 
     }
 }

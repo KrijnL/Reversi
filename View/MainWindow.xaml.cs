@@ -24,8 +24,15 @@ namespace View
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MediaPlayer mplayer;
+
         public MainWindow()
         {
+            mplayer = new MediaPlayer();
+            mplayer.Open(new Uri("../../../eflatdemo2.mp3", UriKind.Relative));
+            mplayer.Play();
+
+
             InitializeComponent();
            
         }
